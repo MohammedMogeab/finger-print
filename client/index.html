@@ -7,6 +7,7 @@
     <title>SecureAuth - Biometric Authentication</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="./styles.css" rel="stylesheet">
     <style>
       /* Reset and Base Styles */
       * {
@@ -844,24 +845,81 @@
       </section>
     </main>
 
+    <!-- About Me Section -->
+    <section class="about-me-section advanced-about-me">
+      <div class="about-me-bg-anim">
+        <div class="about-me-bg-shape shape1"></div>
+        <div class="about-me-bg-shape shape2"></div>
+        <div class="about-me-bg-shape shape3"></div>
+      </div>
+      <div class="about-me-glass-card">
+        <div class="about-me-avatar-glow">
+          <img src="https://avatars.githubusercontent.com/u/108590977?v=4" alt="Mohammed Mogeab" class="about-me-avatar">
+        </div>
+        <h3 class="about-me-title">Mohammed Mogeab</h3>
+        <div class="about-me-typing"><span id="aboutMeTyping"></span></div>
+        <p class="about-me-desc">Owner & Creator of this project. Passionate about secure authentication, open source, and modern web technologies.</p>
+        <div class="about-me-badges">
+          <span class="about-me-badge"><i class="fas fa-fingerprint"></i> WebAuthn Expert</span>
+          <span class="about-me-badge"><i class="fas fa-lock"></i> Security Advocate</span>
+          <span class="about-me-badge"><i class="fas fa-code"></i> Open Source</span>
+        </div>
+        <div class="about-me-socials">
+          <a href="https://x.com/@MohammedMogeab" target="_blank" rel="noopener" class="about-me-social-link" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
+          <a href="https://github.com/MohammedMogeab" target="_blank" rel="noopener" class="about-me-social-link" title="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+    </section>
+    <script>
+      // Typing effect for About Me role/interests
+      const typingTexts = [
+        'WebAuthn Enthusiast',
+        'Security Advocate',
+        'Open Source Contributor',
+        'Full Stack Developer'
+      ];
+      let typingIndex = 0, charIndex = 0, isDeleting = false;
+      const typingSpan = document.getElementById('aboutMeTyping');
+      function typeEffect() {
+        const current = typingTexts[typingIndex];
+        if (!isDeleting) {
+          typingSpan.textContent = current.substring(0, charIndex + 1);
+          charIndex++;
+          if (charIndex === current.length) {
+            isDeleting = true;
+            setTimeout(typeEffect, 1200);
+            return;
+          }
+        } else {
+          typingSpan.textContent = current.substring(0, charIndex - 1);
+          charIndex--;
+          if (charIndex === 0) {
+            isDeleting = false;
+            typingIndex = (typingIndex + 1) % typingTexts.length;
+          }
+        }
+        setTimeout(typeEffect, isDeleting ? 50 : 90);
+      }
+      if (typingSpan) typeEffect();
+    </script>
+
     <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-section">
+    <footer class="footer redesigned-footer">
+      <div class="footer-wave">
+        <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="url(#footer-gradient)" d="M0,0 C480,100 960,0 1440,100 L1440,0 L0,0 Z"></path><defs><linearGradient id="footer-gradient" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+      </div>
+      <div class="footer-content redesigned-footer-content">
+        <div class="footer-section redesigned-footer-brand">
           <div class="footer-brand">
             <i class="fas fa-fingerprint brand-icon"></i>
             <span class="brand-text">SecureAuth</span>
           </div>
-          <p class="footer-description">
-            Leading the future of secure, passwordless authentication with cutting-edge biometric technology.
-          </p>
-          <div class="social-links">
-            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+          <p class="footer-description">Leading the future of secure, passwordless authentication with cutting-edge biometric technology.</p>
+          <div class="footer-social-links">
+            <a href="https://x.com/MohammedMogeab" target="_blank" rel="noopener" class="footer-social-link"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/MohammedMogeab" target="_blank" rel="noopener" class="footer-social-link"><i class="fab fa-github"></i></a>
           </div>
         </div>
-        
         <div class="footer-section">
           <h4>Product</h4>
           <ul class="footer-links">
@@ -871,7 +929,6 @@
             <li><a href="#api">API Docs</a></li>
           </ul>
         </div>
-        
         <div class="footer-section">
           <h4>Company</h4>
           <ul class="footer-links">
@@ -881,7 +938,6 @@
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div>
-        
         <div class="footer-section">
           <h4>Support</h4>
           <ul class="footer-links">
@@ -892,14 +948,14 @@
           </ul>
         </div>
       </div>
-      
-      <div class="footer-bottom">
-        <p>&copy; 2025 SecureAuth. All rights reserved.</p>
-        <div class="footer-badges">
-          <span class="badge">SOC 2 Compliant</span>
-          <span class="badge">GDPR Ready</span>
-          <span class="badge">WebAuthn Certified</span>
+      <div class="footer-bottom redesigned-footer-bottom">
+        <div class="footer-tagline">Empowering your security, one fingerprint at a time.</div>
+        <div class="footer-badges redesigned-footer-badges">
+          <span class="badge"><i class="fas fa-shield-alt"></i> SOC 2 Compliant</span>
+          <span class="badge"><i class="fas fa-user-shield"></i> GDPR Ready</span>
+          <span class="badge"><i class="fas fa-fingerprint"></i> WebAuthn Certified</span>
         </div>
+        <p class="footer-copyright">&copy; 2025 SecureAuth. All rights reserved.</p>
       </div>
     </footer>
 
