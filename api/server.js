@@ -15,6 +15,7 @@ const {
 } = require("./db");
 
 const app = express();
+const crypto = require("crypto");
 
 // ✅ MUST BE BEFORE ANY ROUTES
 app.use(express.json());
@@ -41,11 +42,12 @@ app.get("/init-register", async (req, res) => {
   }
 
   const options = await generateRegistrationOptions({
-    rpID: RP_ID,
-    rpName: "SecureAuth",
-    userID: crypto.randomUUID(), // ✅ REQUIRED
-    userName: email,
-  });
+  rpID: RP_ID,
+  rpName: "SecureAuth",
+  userID: Buffer.from(crypto.randomUUID()), // ✅ FIXED
+  userName: email,
+});
+
 
   res.cookie(
     "regInfo",
