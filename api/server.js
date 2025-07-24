@@ -18,8 +18,10 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 
-const CLIENT_URL = "https://finger-print-zeta.vercel.app";
-const RP_ID = "finger-print-jfes.onrender.com";  // Your backend domain on Render
+const CLIENT_URL = "https://finger-print-zeta.vercel.app";  // your frontend URL
+const RP_ID = "finger-print-zeta.vercel.app";             // your frontend domain as RP ID
+ 
+
 
 
 app.use(cors({ origin: CLIENT_URL, credentials: true }));
