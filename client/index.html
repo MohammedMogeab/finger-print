@@ -4,26 +4,91 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Fingerprint Auth</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #f9fafb, #e2e8f0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        gap: 2rem;
+      }
+
+      input[data-email] {
+        padding: 1rem 2rem;
+        font-size: 2rem;
+        border: 2px solid #cbd5e1;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        outline: none;
+        transition: border 0.2s ease;
+      }
+
+      input[data-email]:focus {
+        border-color: #3b82f6;
+      }
+
+      button {
+        font-size: 2rem;
+        padding: 1rem 2.5rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: #3b82f6;
+        color: white;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      button:hover {
+        background-color: #2563eb;
+      }
+
+      dialog[data-modal] {
+        font-size: 2rem;
+        padding: 2rem;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        position: relative;
+        max-width: 500px;
+        width: 90%;
+      }
+
+      button[data-close] {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #555;
+      }
+
+      button[data-close]:hover {
+        color: #000;
+      }
+    </style>
   </head>
-  <body style="display: flex; flex-direction: column; gap: 1rem">
-    <input
-      data-email
-      type="email"
-      placeholder="Email"
-      style="margin-bottom: 1rem; font-size: 3rem"
-    />
-    <button data-signup style="font-size: 4rem">Sign Up</button>
-    <button data-login style="font-size: 4rem">Log In</button>
-    <dialog data-modal style="font-size: 3rem">
-      <button
-        data-close
-        style="font-size: 2rem; position: absolute; top: 0; right: 0"
-      >
-        &times;
-      </button>
+  <body>
+    <input data-email type="email" placeholder="Enter your email" />
+
+    <button data-signup>Sign Up</button>
+    <button data-login>Log In</button>
+
+    <dialog data-modal>
+      <button data-close>&times;</button>
       <div data-content></div>
     </dialog>
+
     <script type="module" src="/main.js"></script>
   </body>
 </html>
