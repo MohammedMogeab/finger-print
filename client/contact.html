@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SecureAuth Security - Our Services</title>
+    <title>SecureAuth - Contact Us</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Hero background from index.html */
+            background: var(--bg-secondary); /* Lighter background for content */
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -58,7 +58,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             z-index: 1000;
             transition: all 0.3s ease;
-            box-shadow: var(--shadow-md); /* Added shadow */
+            box-shadow: var(--shadow-md);
         }
 
         .nav-container {
@@ -165,22 +165,6 @@
             opacity: 0.3;
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            color: white;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: fadeIn 1s ease-out;
-        }
-
         .hero-title {
             font-size: 3.5rem;
             font-weight: 800; /* Extra bold */
@@ -209,84 +193,6 @@
             animation: fadeIn 1s ease-out 0.4s forwards;
             opacity: 0; /* Start hidden for animation */
         }
-
-        .btn-primary-hero {
-            background: linear-gradient(135deg, var(--accent-color), #fbbf24);
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: var(--radius-lg);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
-            display: inline-block;
-            animation: slideInUp 0.8s ease-out 0.6s forwards;
-            opacity: 0; /* Start hidden for animation */
-        }
-
-        .btn-primary-hero:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-            filter: brightness(1.1);
-        }
-
-        /* Service Card Styles (Inspired by Feature Cards) */
-        .service-card {
-            background: var(--bg-primary); /* White background for cards */
-            padding: 2.5rem;
-            border-radius: var(--radius-xl);
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            height: 100%; /* Ensure uniform height */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--primary-color); /* Highlight border on hover */
-        }
-
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            color: white;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            flex-shrink: 0; /* Prevent icon from shrinking */
-        }
-
-        .service-card:hover .service-icon {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem; /* Larger heading */
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        .service-card p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            flex-grow: 1; /* Allow description to take available space */
-        }
         
         .section-title {
             font-size: 3rem; /* Larger section titles */
@@ -296,48 +202,144 @@
             text-align: center;
         }
 
-        /* Call to Action Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            padding: 4rem 2rem;
+        /* Contact Form Styles */
+        .contact-card {
+            background: var(--bg-primary);
+            padding: 2.5rem;
             border-radius: var(--radius-xl);
-            text-align: center;
-            box-shadow: var(--shadow-xl);
-            margin-top: 4rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .cta-section h2 {
-            font-size: 3rem;
-            font-weight: 800;
+        .input-group {
+            position: relative;
             margin-bottom: 1.5rem;
         }
 
-        .cta-section p {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.1rem;
         }
 
-        .cta-button {
-            background: white;
-            color: var(--primary-color);
-            padding: 1rem 2.5rem;
+        .contact-input,
+        .contact-textarea {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
             border-radius: var(--radius-lg);
-            font-weight: 700;
-            font-size: 1.125rem;
+            background: var(--bg-primary);
             transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
-            display: inline-block;
+            outline: none;
         }
 
-        .cta-button:hover {
-            background: var(--bg-secondary);
-            transform: translateY(-3px);
+        .contact-input:focus,
+        .contact-textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .contact-textarea {
+            padding: 1rem; /* No icon, so no left padding adjustment */
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
-            color: var(--primary-dark);
+            filter: brightness(1.1);
+        }
+
+        /* Contact Info Section */
+        .info-card {
+            background: var(--bg-primary);
+            padding: 2.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card p, .info-card a {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            text-decoration: none;
+        }
+
+        .info-card a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Map Section */
+        .map-container {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            aspect-ratio: 16 / 9; /* Maintain aspect ratio for responsiveness */
+            width: 100%;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         /* Footer inspired by index.html */
@@ -346,6 +348,7 @@
             color: white;
             padding: 3rem 0 1rem;
             position: relative;
+            margin-top: 5rem; /* Add margin to separate from content */
         }
 
         .footer-wave {
@@ -530,25 +533,11 @@
             .hero-description {
                 font-size: 1rem;
             }
-            .service-card {
-                padding: 1.5rem;
-            }
-            .service-card h3 {
-                font-size: 1.3rem;
-            }
-            .service-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.7rem;
-            }
             .section-title {
                 font-size: 2rem;
             }
-            .cta-section h2 {
-                font-size: 2.2rem;
-            }
-            .cta-section p {
-                font-size: 1rem;
+            .info-card {
+                padding: 1.5rem;
             }
             .footer-content {
                 grid-template-columns: 1fr;
@@ -567,15 +556,14 @@
         }
     </style>
     <script>
-      //  Protect the page - Client-side check for 'auth' in sessionStorage
-       if (!sessionStorage.getItem("auth")) {
-          window.location.href = "index.html"; // redirect if not logged in
-       } else {
-            document.addEventListener('DOMContentLoaded', function() {
-                // Remove the 'auth-check' class if you had it. 
-                // For this version, content is visible by default unless JS redirects.
-            });
-     }
+        // Protect the page - Client-side check for 'auth' in sessionStorage
+        // if (!sessionStorage.getItem("auth")) {
+        //     window.location.href = "index.html"; // redirect if not logged in
+        // } else {
+        //     document.addEventListener('DOMContentLoaded', function() {
+        //         // Content is visible by default if authenticated, no specific class needed to remove
+        //     });
+        // }
 
         function logout() {
             sessionStorage.removeItem("auth");
@@ -596,173 +584,128 @@
     </script>
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <nav class="nav-container">
             <div class="nav-brand">
-                <i class="fas fa-shield-alt brand-icon"></i> <span class="brand-text">SecureAuth</span>
+                <i class="fas fa-shield-alt brand-icon"></i>
+                <span class="brand-text">SecureAuth</span>
             </div>
             <div class="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="service.html" class="nav-link active">Services</a>
+               
+                <a href="service.html" class="nav-link">Services</a>
                 <a href="#" class="nav-link">About Us</a>
-                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
                 <button onclick="logout()" class="nav-cta">Logout</button>
             </div>
             <div class="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
         </nav>
+        <!-- Mobile Navigation Menu (hidden by default) -->
         <div class="mobile-nav-menu">
-            <a href="services.html" class="nav-link active">Services</a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="service.html" class="nav-link">Services</a>
             <a href="#" class="nav-link">About Us</a>
-            <a href="#" class="nav-link">Contact</a>
+            <a href="contact.html" class="nav-link">Contact</a>
             <button onclick="logout()" class="nav-cta">Logout</button>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="main-content">
+        <!-- Hero Section -->
         <section class="hero-section">
             <div class="container relative z-10">
-                <div class="hero-badge">
-                    <i class="fas fa-shield-virus"></i>
-                    <span>Leading Cybersecurity Solutions</span>
-                </div>
                 <h1 class="hero-title">
-                    Your Ultimate Defense Against
-                    <span class="gradient-text">Cyber Threats</span>
+                    Get In Touch With
+                    <span class="gradient-text">Our Experts</span>
                 </h1>
                 <p class="hero-description">
-                    At SecureAuth Security, we specialize in comprehensive, advanced
-                    cybersecurity services designed to protect your digital assets,
-                    detect sophisticated attacks, and ensure unwavering business resilience.
+                    Have questions about our cybersecurity services or need a custom solution?
+                    Reach out to us, and let's secure your digital future together.
                 </p>
-                <a href="#contact-us" class="btn-primary-hero">
-                    <i class="fas fa-handshake mr-2"></i> Get a Free Consultation
-                </a>
             </div>
         </section>
 
-        <section class="py-16 bg-white" id="our-services">
-            <div class="container">
-                <h2 class="section-title">Our Comprehensive Security Offerings</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-flask"></i>
+        <!-- Contact Content Section -->
+        <section class="py-16 bg-bg-secondary">
+            <div class="container grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="contact-card">
+                    <h2 class="text-3xl font-bold text-center mb-8 text-text-primary">Send Us a Message</h2>
+                    <form action="#" method="POST" class="space-y-6">
+                        <div class="input-group">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" placeholder="Your Name" class="contact-input" required>
                         </div>
-                        <h3>Penetration Testing</h3>
-                        <p>Simulate real-world cyberattacks to uncover your system's vulnerabilities before hackers do. We provide actionable insights for robust defense.</p>
+                        <div class="input-group">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" placeholder="Your Email" class="contact-input" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-tag input-icon"></i>
+                            <input type="text" placeholder="Subject" class="contact-input" required>
+                        </div>
+                        <div class="input-group">
+                            <textarea placeholder="Your Message" class="contact-textarea" rows="6" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane mr-2"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3>Phone Support</h3>
+                        <p>Monday - Friday, 9 AM - 5 PM EST</p>
+                        <a href="tel:+1234567890" class="block mt-2 font-semibold">+1 (234) 567-890</a>
                     </div>
 
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-crosshairs"></i>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
                         </div>
-                        <h3>Threat Hunting</h3>
-                        <p>Proactive identification and isolation of advanced persistent threats (APTs) and hidden malware lurking deep within your infrastructure.</p>
+                        <h3>Email Us</h3>
+                        <p>We typically respond within 24 hours.</p>
+                        <a href="mailto:info@secureauth.com" class="block mt-2 font-semibold">info@secureauth.com</a>
                     </div>
 
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-fire-extinguisher"></i>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <h3>Incident Response</h3>
-                        <p>Our expert team is ready 24/7 to rapidly respond, contain, eradicate, and recover from cyberattacks, minimizing damage and downtime.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3>Threat Analysis & Intelligence</h3>
-                        <p>Gain a deep understanding of the evolving threat landscape with our comprehensive analysis and actionable intelligence tailored to your industry.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-bug"></i>
-                        </div>
-                        <h3>Vulnerability Management</h3>
-                        <p>Continuous scanning, identification, and remediation prioritization of vulnerabilities across your networks, applications, and systems.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <h3>Bug Bounty Programs</h3>
-                        <p>Design and manage effective bug bounty programs, leveraging the global hacker community to discover critical vulnerabilities ethically.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-clipboard-check"></i>
-                        </div>
-                        <h3>Security Audits & Compliance</h3>
-                        <p>Ensure adherence to industry standards and regulatory requirements (e.g., GDPR, HIPAA) with thorough security audits and expert guidance.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-cloud"></i>
-                        </div>
-                        <h3>Cloud Security</h3>
-                        <p>Secure your cloud infrastructure and applications with specialized strategies for AWS, Azure, Google Cloud, and other cloud environments.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <h3>Security Awareness Training</h3>
-                        <p>Empower your employees to be your first line of defense through engaging and effective cybersecurity awareness training programs.</p>
+                        <h3>Our Office</h3>
+                        <p>123 Security Lane, Suite 400<br>Cyber City, CA 90210, USA</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-16 bg-bg-secondary" id="why-choose-us">
+        <!-- Map Section -->
+        <section class="py-16 bg-white">
             <div class="container">
-                <h2 class="section-title">Why Choose SecureAuth?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="feature-card"> <div class="feature-icon">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h3>Elite Expertise</h3>
-                        <p>Our team comprises certified cybersecurity professionals with years of hands-on experience in tackling complex threats.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Proactive Defense</h3>
-                        <p>We don't just react; we anticipate and neutralize threats before they can impact your operations, ensuring continuous protection.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <h3>24/7 Vigilance</h3>
-                        <p>Your security is our top priority, with round-the-clock monitoring, rapid response, and unwavering support.</p>
-                    </div>
+                <h2 class="section-title">Find Us on the Map</h2>
+                <div class="map-container">
+                    <!-- Placeholder for Google Maps Embed -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.250552317953!2d-122.0842496846812!3d37.42199997982269!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb5e0f7f3a9e3%3A0x6a2c3d5e2c7b8a7b!2sGoogleplex!5e0!3m2!1sen!2sus!4v1678901234567!5m2!1sen!2sus"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Our Office Location"
+                    ></iframe>
                 </div>
-            </div>
-        </section>
-
-        <section class="cta-section" id="contact-us">
-            <div class="container">
-                <h2>Ready to Fortify Your Digital Future?</h2>
-                <p>
-                    Partner with SecureAuth Security and experience unparalleled protection.
-                    Contact us today for a tailored cybersecurity strategy.
-                </p>
-                <a href="mailto:info@SecureAuth.com" class="cta-button">
-                    <i class="fas fa-envelope mr-2"></i> Get a Free Quote
-                </a>
             </div>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-wave">
             <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="url(#footer-gradient)" d="M0,0 C480,100 960,0 1440,100 L1440,0 L0,0 Z"></path><defs><linearGradient id="footer-gradient" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="var(--primary-color)"/><stop offset="1" stop-color="var(--primary-light)"/></linearGradient></defs></svg>
@@ -783,10 +726,10 @@
             <div class="footer-section">
                 <h4>Services</h4>
                 <ul class="footer-links">
-                    <li><a href="#our-services">Penetration Testing</a></li>
-                    <li><a href="#our-services">Threat Hunting</a></li>
-                    <li><a href="#our-services">Incident Response</a></li>
-                    <li><a href="#our-services">Vulnerability Management</a></li>
+                    <li><a href="services.html#our-services">Penetration Testing</a></li>
+                    <li><a href="services.html#our-services">Threat Hunting</a></li>
+                    <li><a href="services.html#our-services">Incident Response</a></li>
+                    <li><a href="services.html#our-services">Vulnerability Management</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -795,7 +738,7 @@
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Careers</a></li>
                     <li><a href="#">Blog</a></li>
-                    <li><a href="#contact-us">Contact</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">

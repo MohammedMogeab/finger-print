@@ -80,7 +80,7 @@ async function login() {
   }
 if (verifyData.verified) {
   sessionStorage.setItem("auth", "true");
-  window.location.href = "service.html"; // redirect to your services page
+  window.location.href = "service.html"; 
 }else {
     showModalText(`Failed to log in`)
   }
