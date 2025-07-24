@@ -15,78 +15,122 @@ const SERVER_URL = "https://finger-print-jfes.onrender.com"
 async function signup() {
   const email = emailInput.value
 
-  // 1. Get challenge from server
-  const initResponse = await fetch(
-    `${SERVER_URL}/init-register?email=${email}`,
-    { credentials: "include" }
-  )
-  const options = await initResponse.json()
-  if (!initResponse.ok) {
-    showModalText(options.error)
-  }
+  // Show loading overlay
+  showLoadingOverlay("Creating account...")
 
-  // 2. Create passkey
-  const registrationJSON = await startRegistration(options)
+  try {
+    // 1. Get challenge from server
+    const initResponse = await fetch(
+      `${SERVER_URL}/init-register?email=${email}`,
+      { credentials: "include" }
+    )
+    const options = await initResponse.json()
+    if (!initResponse.ok) {
+      showModalText(options.error || "Failed to initialize registration.")
+      return // Exit if initialization fails
+    }
 
-  // 3. Save passkey in DB
-  const verifyResponse = await fetch(`${SERVER_URL}/verify-register`, {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(registrationJSON),
-  })
+    // 2. Create passkey
+    const registrationJSON = await startRegistration(options)
 
-  const verifyData = await verifyResponse.json()
-  if (!verifyResponse.ok) {
-    showModalText(verifyData.error)
-  }
-  if (verifyData.verified) {
-    showModalText(`Successfully registered ${email}`)
-  } else {
-    showModalText(`Failed to register`)
+    // 3. Save passkey in DB
+    const verifyResponse = await fetch(`${SERVER_URL}/verify-register`, {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(registrationJSON),
+    })
+
+    const verifyData = await verifyResponse.json()
+    if (!verifyResponse.ok) {
+      showModalText(verifyData.error || "Failed to verify registration.")
+      return // Exit if verification fails
+    }
+
+    if (verifyData.verified) {
+      showModalText(`Successfully registered ${email}`)
+    } else {
+      showModalText(`Failed to register.`)
+    }
+  } catch (error) {
+    console.error("Signup error:", error)
+    showModalText(`An error occurred during signup: ${error.message}`)
+  } finally {
+    hideLoadingOverlay()
   }
 }
 
 async function login() {
   const email = emailInput.value
 
-  // 1. Get challenge from server
-  const initResponse = await fetch(`${SERVER_URL}/init-auth?email=${email}`, {
-    credentials: "include",
-  })
-  const options = await initResponse.json()
-  if (!initResponse.ok) {
-    showModalText(options.error)
-  }
+  // Show loading overlay
+  showLoadingOverlay("Authenticating...")
 
-  // 2. Get passkey
-  const authJSON = await startAuthentication(options)
+  try {
+    // 1. Get challenge from server
+    const initResponse = await fetch(`${SERVER_URL}/init-auth?email=${email}`, {
+      credentials: "include",
+    })
+    const options = await initResponse.json()
+    if (!initResponse.ok) {
+      showModalText(options.error || "Failed to initialize authentication.")
+      return // Exit if initialization fails
+    }
 
-  // 3. Verify passkey with DB
-  const verifyResponse = await fetch(`${SERVER_URL}/verify-auth`, {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(authJSON),
-  })
+    // 2. Get passkey
+    const authJSON = await startAuthentication(options)
 
-  const verifyData = await verifyResponse.json()
-  if (!verifyResponse.ok) {
-    showModalText(verifyData.error)
-  }
-if (verifyData.verified) {
-  sessionStorage.setItem("auth", "true");
-  window.location.href = "service.html"; 
-}else {
-    showModalText(`Failed to log in`)
+    // 3. Verify passkey with DB
+    const verifyResponse = await fetch(`${SERVER_URL}/verify-auth`, {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(authJSON),
+    })
+
+    const verifyData = await verifyResponse.json()
+    if (!verifyResponse.ok) {
+      showModalText(verifyData.error || "Failed to verify authentication.")
+      return // Exit if verification fails
+    }
+
+    if (verifyData.verified) {
+      sessionStorage.setItem("auth", "true")
+      // *** THE CRITICAL CORRECTION: Changed from "services.html" to "/service.html" ***
+      window.location.href = "/service.html" 
+    } else {
+      showModalText(`Failed to log in.`)
+    }
+  } catch (error) {
+    console.error("Login error:", error)
+    showModalText(`An error occurred during login: ${error.message}`)
+  } finally {
+    hideLoadingOverlay()
   }
 }
 
 function showModalText(text) {
   modal.querySelector("[data-content]").innerText = text
   modal.showModal()
+}
+
+// Function to show loading overlay (ensure this is in your index.html)
+function showLoadingOverlay(message = "Processing...") {
+  const loadingOverlay = document.getElementById("loadingOverlay")
+  if (loadingOverlay) {
+    loadingOverlay.querySelector("p").innerText = message
+    loadingOverlay.classList.add("active")
+  }
+}
+
+// Function to hide loading overlay (ensure this is in your index.html)
+function hideLoadingOverlay() {
+  const loadingOverlay = document.getElementById("loadingOverlay")
+  if (loadingOverlay) {
+    loadingOverlay.classList.remove("active")
+  }
 }
