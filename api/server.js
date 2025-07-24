@@ -18,10 +18,12 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 
-const CLIENT_URL = "http://localhost:5173"
-const RP_ID = "localhost"
+const CLIENT_URL = "https://finger-print-zeta.vercel.app";
+const RP_ID = "finger-print-jfes.onrender.com";  // Your backend domain on Render
 
-app.use(cors({ origin: CLIENT_URL, credentials: true }))
+
+app.use(cors({ origin: CLIENT_URL, credentials: true }));
+
 
 app.get("/init-register", async (req, res) => {
   const email = req.query.email
