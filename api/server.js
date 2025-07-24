@@ -3,45 +3,49 @@ const {
   verifyRegistrationResponse,
   generateAuthenticationOptions,
   verifyAuthenticationResponse,
-} = require("@simplewebauthn/server")
-const express = require("express")
-const cors = require("cors")
-const cookieParser = require("cookie-parser")
+} = require("@simplewebauthn/server");
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const {
   getUserByEmail,
   createUser,
   updateUserCounter,
   getUserById,
-} = require("./db")
+} = require("./db");
 
-const app = express()
-app.use(express.json())
-app.use(cookieParser())
+const app = express();
 
-const CLIENT_URL = "https://finger-print-zeta.vercel.app";  // your frontend URL
-const RP_ID = "finger-print-zeta.vercel.app";             // your frontend domain as RP ID
- 
+// ✅ MUST BE BEFORE ANY ROUTES
+app.use(express.json());
+app.use(cookieParser());
 
+// ✅ USE EXPLICIT CLIENT_URL FOR CORS (not wildcard or default)
+const CLIENT_URL = "https://finger-print-zeta.vercel.app";
+const RP_ID = "finger-print-zeta.vercel.app";
 
+app.use(
+  cors({
+    origin: CLIENT_URL,
+    credentials: true,
+  })
+);
 
-app.use(cors({ origin: CLIENT_URL, credentials: true }));
-
-
+// ✅ INIT REGISTER
 app.get("/init-register", async (req, res) => {
-  const email = req.query.email
-  if (!email) {
-    return res.status(400).json({ error: "Email is required" })
-  }
+  const email = req.query.email;
+  if (!email) return res.status(400).json({ error: "Email is required" });
 
   if (getUserByEmail(email) != null) {
-    return res.status(400).json({ error: "User already exists" })
+    return res.status(400).json({ error: "User already exists" });
   }
 
   const options = await generateRegistrationOptions({
     rpID: RP_ID,
-    rpName: "Web Dev Simplified",
+    rpName: "SecureAuth",
+    userID: crypto.randomUUID(), // ✅ REQUIRED
     userName: email,
-  })
+  });
 
   res.cookie(
     "regInfo",
@@ -50,25 +54,41 @@ app.get("/init-register", async (req, res) => {
       email,
       challenge: options.challenge,
     }),
-    { httpOnly: true, maxAge: 60000, secure: true }
-  )
+    {
+      httpOnly: true,
+      maxAge: 60000,
+      secure: true,
+      sameSite: "none", // ✅ Required when frontend/backend on different domains
+    }
+  );
 
-  res.json(options)
-})
+  res.json(options);
+});
 
+// ✅ VERIFY REGISTER
 app.post("/verify-register", async (req, res) => {
-  const regInfo = JSON.parse(req.cookies.regInfo)
-
-  if (!regInfo) {
-    return res.status(400).json({ error: "Registration info not found" })
+  let regInfo;
+  try {
+    regInfo = JSON.parse(req.cookies.regInfo);
+  } catch (err) {
+    return res.status(400).json({ error: "Invalid registration cookie" });
   }
 
-  const verification = await verifyRegistrationResponse({
-    response: req.body,
-    expectedChallenge: regInfo.challenge,
-    expectedOrigin: CLIENT_URL,
-    expectedRPID: RP_ID,
-  })
+  if (!regInfo) {
+    return res.status(400).json({ error: "Registration info not found" });
+  }
+
+  let verification;
+  try {
+    verification = await verifyRegistrationResponse({
+      response: req.body,
+      expectedChallenge: regInfo.challenge,
+      expectedOrigin: CLIENT_URL,
+      expectedRPID: RP_ID,
+    });
+  } catch (err) {
+    return res.status(400).json({ error: "Verification error", details: err.message });
+  }
 
   if (verification.verified) {
     createUser(regInfo.userId, regInfo.email, {
@@ -77,27 +97,23 @@ app.post("/verify-register", async (req, res) => {
       counter: verification.registrationInfo.counter,
       deviceType: verification.registrationInfo.credentialDeviceType,
       backedUp: verification.registrationInfo.credentialBackedUp,
-      transport: req.body.transports,
-    })
-    res.clearCookie("regInfo")
-    return res.json({ verified: verification.verified })
+      transports: req.body.transports,
+    });
+
+    res.clearCookie("regInfo");
+    return res.json({ verified: true });
   } else {
-    return res
-      .status(400)
-      .json({ verified: false, error: "Verification failed" })
+    return res.status(400).json({ verified: false, error: "Verification failed" });
   }
-})
+});
 
+// ✅ INIT AUTH
 app.get("/init-auth", async (req, res) => {
-  const email = req.query.email
-  if (!email) {
-    return res.status(400).json({ error: "Email is required" })
-  }
+  const email = req.query.email;
+  if (!email) return res.status(400).json({ error: "Email is required" });
 
-  const user = getUserByEmail(email)
-  if (user == null) {
-    return res.status(400).json({ error: "No user for this email" })
-  }
+  const user = getUserByEmail(email);
+  if (!user) return res.status(400).json({ error: "No user for this email" });
 
   const options = await generateAuthenticationOptions({
     rpID: RP_ID,
@@ -108,7 +124,7 @@ app.get("/init-auth", async (req, res) => {
         transports: user.passKey.transports,
       },
     ],
-  })
+  });
 
   res.cookie(
     "authInfo",
@@ -116,49 +132,58 @@ app.get("/init-auth", async (req, res) => {
       userId: user.id,
       challenge: options.challenge,
     }),
-    { httpOnly: true, maxAge: 60000, secure: true }
-  )
+    {
+      httpOnly: true,
+      maxAge: 60000,
+      secure: true,
+      sameSite: "none",
+    }
+  );
 
-  res.json(options)
-})
+  res.json(options);
+});
 
+// ✅ VERIFY AUTH
 app.post("/verify-auth", async (req, res) => {
-  const authInfo = JSON.parse(req.cookies.authInfo)
-
-  if (!authInfo) {
-    return res.status(400).json({ error: "Authentication info not found" })
+  let authInfo;
+  try {
+    authInfo = JSON.parse(req.cookies.authInfo);
+  } catch (err) {
+    return res.status(400).json({ error: "Invalid auth cookie" });
   }
 
-  const user = getUserById(authInfo.userId)
-  if (user == null || user.passKey.id != req.body.id) {
-    return res.status(400).json({ error: "Invalid user" })
+  const user = getUserById(authInfo.userId);
+  if (!user || user.passKey.id !== req.body.id) {
+    return res.status(400).json({ error: "Invalid user" });
   }
 
-  const verification = await verifyAuthenticationResponse({
-    response: req.body,
-    expectedChallenge: authInfo.challenge,
-    expectedOrigin: CLIENT_URL,
-    expectedRPID: RP_ID,
-    authenticator: {
-      credentialID: user.passKey.id,
-      credentialPublicKey: user.passKey.publicKey,
-      counter: user.passKey.counter,
-      transports: user.passKey.transports,
-    },
-  })
+  let verification;
+  try {
+    verification = await verifyAuthenticationResponse({
+      response: req.body,
+      expectedChallenge: authInfo.challenge,
+      expectedOrigin: CLIENT_URL,
+      expectedRPID: RP_ID,
+      authenticator: {
+        credentialID: user.passKey.id,
+        credentialPublicKey: user.passKey.publicKey,
+        counter: user.passKey.counter,
+        transports: user.passKey.transports,
+      },
+    });
+  } catch (err) {
+    return res.status(400).json({ error: "Authentication error", details: err.message });
+  }
 
   if (verification.verified) {
-    updateUserCounter(user.id, verification.authenticationInfo.newCounter)
-    res.clearCookie("authInfo")
-    // Save user in a session cookie
-    return res.json({ verified: verification.verified })
+    updateUserCounter(user.id, verification.authenticationInfo.newCounter);
+    res.clearCookie("authInfo");
+    return res.json({ verified: true });
   } else {
-    return res
-      .status(400)
-      .json({ verified: false, error: "Verification failed" })
+    return res.status(400).json({ verified: false, error: "Verification failed" });
   }
-})
+});
 
 app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000")
-})
+  console.log("✅ Server running on http://localhost:3000");
+});
