@@ -78,9 +78,10 @@ async function login() {
   if (!verifyResponse.ok) {
     showModalText(verifyData.error)
   }
-  if (verifyData.verified) {
-    showModalText(`Successfully logged in ${email}`)
-  } else {
+if (verifyData.verified) {
+  sessionStorage.setItem("auth", "true");
+  window.location.href = "service.html"; // redirect to your services page
+}else {
     showModalText(`Failed to log in`)
   }
 }
