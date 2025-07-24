@@ -1,3 +1,4 @@
+
 # SecureAuth: Biometric Authentication
 
 SecureAuth is a web application that demonstrates passwordless authentication using WebAuthn technology. It allows users to sign up and log in using their device's biometric sensors (like fingerprint or face ID) or a security key.
@@ -87,3 +88,5 @@ This project was created by **Mohammed Mogeab**.
 
 - **GitHub:** [@MohammedMogeab](https://github.com/MohammedMogeab)
 - **X (Twitter):** [@MohammedMogeab](https://x.com/MohammedMogeab)
+
+
